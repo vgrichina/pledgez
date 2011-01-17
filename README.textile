@@ -1,3 +1,17 @@
+h1. Pledgez - concise BDD framework for Groovy
+
+h2. Intro
+
+Pledgez is a "behavior driven development":http://en.wikipedia.org/wiki/Behavior_Driven_Development framework for Groovy,
+which aims for tests syntax to be as concise as possible.
+
+It is -stolen from- heavily inspired by "Vows":http://vowsjs.org. However Groovy actually allows for more concise syntax.
+
+h2. Sample
+
+Usage of Pledgez is very simple. Here's an example ported from Vows.
+
+<pre><code>
 import com.componentix.pledgez.Pledges
 
 Pledges.describe("Division By Zero").addBatch([
@@ -16,3 +30,6 @@ Pledges.describe("Division By Zero").addBatch([
         ]
     ]
 ]).run()
+</code></pre>
+
+
