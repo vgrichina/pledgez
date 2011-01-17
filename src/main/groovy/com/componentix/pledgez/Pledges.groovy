@@ -18,6 +18,7 @@ class Pledges {
 
     void printResults(results, updatedPath, lastPrintedPath) {
         def result = updatedPath.inject(results, { subResults, pathElement -> subResults[pathElement] })
+
         def uncommonPath = { currentPath, remainingLastPath ->
             if (!currentPath) {
                 return []
@@ -30,6 +31,10 @@ class Pledges {
         }.call(updatedPath, lastPrintedPath)
 
         uncommonPath.eachWithIndex { pathElement, i ->
+            (updatedPath.size() - uncommonPath.size() + i).times {
+                print "    "
+            }
+
             if (i == uncommonPath.size() - 1) {
                 print pathElement + " : "
                 if (result instanceof Throwable) {
