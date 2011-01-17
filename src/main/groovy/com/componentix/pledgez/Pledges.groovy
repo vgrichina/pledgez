@@ -16,9 +16,41 @@ class Pledges {
         return this
     }
 
+    void printResults(results, updatedPath, lastPrintedPath) {
+        def result = updatedPath.inject(results, { subResults, pathElement -> subResults[pathElement] })
+        def uncommonPath = { currentPath, remainingLastPath ->
+            if (!currentPath) {
+                return []
+            }
+            if (!remainingLastPath || currentPath.head() != remainingLastPath.head()) {
+                return currentPath
+            }
+
+            return call(currentPath.tail(), remainingLastPath.tail())
+        }.call(updatedPath, lastPrintedPath)
+
+        uncommonPath.eachWithIndex { pathElement, i ->
+            if (i == uncommonPath.size() - 1) {
+                print pathElement + " : "
+                if (result instanceof Throwable) {
+                    println "ERROR"
+                    result.printStackTrace()
+                } else if (result) {
+                    println "PASSED"
+                } else {
+                    println "FAILED"
+                }
+            } else {
+                println pathElement
+            }
+        }
+    }
+
     Pledges run() {
+        def lastPrintedPath = []
         return run({ results, updatedPath ->
-            println "results = $results, updatedPath = $updatedPath"
+            printResults(results, updatedPath, lastPrintedPath)
+            lastPrintedPath = updatedPath
         } as PledgesRunHandler);
     }
 
